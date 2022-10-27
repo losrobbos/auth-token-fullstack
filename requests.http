@@ -1,0 +1,24 @@
+@API_URL = http://localhost:5000
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzVhOWE5NWI4MThhODI4NmM1ZTdjNjkiLCJpYXQiOjE2NjY4ODIzMzYsImV4cCI6MTY2NzIyNzkzNn0.Sp0hLjEiEDWWc02giIAyrlrOHT-dPIcgFNzvXe2q7ek
+
+### LOGIN
+POST {{API_URL}}/login
+Content-Type: application/json
+
+{
+  "email": "los@los.los",
+  "password": "los123" 
+}
+
+### SIGNUP
+POST {{API_URL}}/signup
+Content-Type: application/json
+
+{
+  "email": "los@los.los",
+  "password": "los123" 
+}
+
+### PROTECTED ROUTE (Reject without token)
+GET {{API_URL}}/todos
+Authorization: {{TOKEN}}
