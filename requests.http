@@ -21,4 +21,4 @@ Content-Type: application/json
 
 ### PROTECTED ROUTE (Reject without token)
 GET {{API_URL}}/todos
-Authorization: {{TOKEN}}
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzVhOWE5NWI4MThhODI4NmM1ZTdjNjkiLCJpYXQiOjE2NjY4ODQ0NDYsImV4cCI6MTY2NzIzMDA0Nn0.j0GRK7rcYrs1d1Jb_FvhSEsLf1M6WBqUkfgbnH44F6k
