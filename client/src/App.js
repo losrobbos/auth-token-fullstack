@@ -6,7 +6,9 @@ axios.defaults.baseURL =
   process.env.REACT_APP_API_URL || "http://localhost:5000"; // = API URL
 
 function App() {
-  const [token, setToken] = useState("");
+  const [email, setEmail] = useState("")
+  const [pw, setPw] = useState("")
+  const [token, setToken] = useState("");  
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -19,19 +21,30 @@ function App() {
     }
   };
 
+  const signup = async () => {
+    try {
+      const response = await axios.post("/signup", { email, password: pw });
+      const user = response.data
+      console.log(user);
+      setError("");
+      setMessage(`Signed you up, ${user.email}`);
+      setEmail("")
+      setPw("")
+    } catch (err) {
+      showError(err);
+    }
+  }
+
   // fetch => for ALL sorts of grabbing data (json, html, files)
   // axios => specific for JSON apis => stringify under hood, content type
-
   const login = async () => {
     try {
-      const response = await axios.post("/login", {
-        email: "los@los.los",
-        password: "los123",
-      });
-      console.log(response.data);
+      const response = await axios.post("/login", { email, password: pw });
+      const data = response.data
+      console.log(data);
       setError("");
-      setMessage(`Logged you in, ${response.data.user.email}`);
-      setToken(response.data.token)
+      setMessage(`Logged you in, ${data.user.email}`);
+      setToken(data.token)
     } catch (err) {
       showError(err);
     }
@@ -55,6 +68,31 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>
+          <h2>Signup</h2>
+          <input
+            type="text"
+            placeholder="Email..."
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password..."
+            onChange={(e) => setPw(e.target.value)}
+          />
+          <button onClick={signup}>Signup</button>
+        </div>
+        <div>
+          <h2>Login</h2>
+          <input
+            type="text"
+            placeholder="Email..."
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password..."
+            onChange={(e) => setPw(e.target.value)}
+          />
           <button onClick={login}>Login</button>
         </div>
         <div>
