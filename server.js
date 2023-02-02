@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 
 app.post("/signup", async (req, res, next) => {
 
+  console.log("BODY: ", req.body)
+
   try {
 
     const { email, password } = req.body
