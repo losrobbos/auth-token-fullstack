@@ -6,8 +6,10 @@ axios.defaults.baseURL =
   import.meta.env.VITE_API_URL || "http://localhost:5000"; // = API URL
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
+  const [emailSignup, setEmailSignup] = useState("");
+  const [pwSignup, setPwSignup] = useState("");
+  const [emailLogin, setEmailLogin] = useState("");
+  const [pwLogin, setPwLogin] = useState("");
   const [token, setToken] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -23,13 +25,13 @@ function App() {
 
   const signup = async () => {
     try {
-      const response = await axios.post("/signup", { email, password: pw });
+      const response = await axios.post("/signup", { email: emailSignup, password: pwSignup });
       const user = response.data;
       console.log(user);
       setError("");
       setMessage(`Signed you up, ${user.email}`);
-      setEmail("");
-      setPw("");
+      setEmailSignup("");
+      setPwSignup("");
     } catch (err) {
       showError(err);
     }
@@ -39,12 +41,14 @@ function App() {
   // axios => specific for JSON apis => stringify under hood, content type
   const login = async () => {
     try {
-      const response = await axios.post("/login", { email, password: pw });
+      const response = await axios.post("/login", { email: emailLogin, password: pwLogin });
       const data = response.data;
       console.log(data);
       setError("");
-      setMessage(`Logged you in, ${data.user.email}`);
       setToken(data.token);
+      setMessage(`Logged you in, ${data.user.email}`);
+      setEmailLogin("")
+      setPwLogin("")
     } catch (err) {
       showError(err);
     }
@@ -67,35 +71,37 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div>
+        <form>
           <h2>Signup</h2>
           <input
             type="text"
             placeholder="Email..."
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmailSignup(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password..."
-            onChange={(e) => setPw(e.target.value)}
+            onChange={(e) => setPwSignup(e.target.value)}
           />
-          <button onClick={signup}>Signup</button>
-        </div>
-        <div>
+          <button type="button" onClick={signup}>Signup</button>
+        </form>
+
+        <form>
           <h2>Login</h2>
           <input
             type="text"
             placeholder="Email..."
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmailLogin(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password..."
-            onChange={(e) => setPw(e.target.value)}
+            onChange={(e) => setPwLogin(e.target.value)}
           />
-          <button onClick={login}>Login</button>
-        </div>
-        <div>
+          <button type="button" onClick={login}>Login</button>
+        </form>
+
+        <div className="secret">
           <button onClick={getSecret}>Show secret</button>
         </div>
         {error ? (
